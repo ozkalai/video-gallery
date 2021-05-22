@@ -18,6 +18,30 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }) {
-  console.log("data", data);
-  return <div className={styles.container}></div>;
+  return (
+    <div className={styles.wrapper}>
+      <h2>Adem İlter React ile Twitter Klonu</h2>
+      <ul className={styles.grid}>
+        {data.items.map(({ id, snippet = {} }) => {
+          const { title, thumbnails = {}, resourceId = {} } = snippet;
+          const { medium } = thumbnails;
+          return (
+            <li key={id} className={styles.card}>
+              <a href={`https://www.youtube.com/watch?v=${resourceId.videoId}`}>
+                <p>
+                  <img
+                    width={medium.width}
+                    height={medium.height}
+                    src={medium.url}
+                    alt=""
+                  />
+                </p>
+                <h3>{title}</h3>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
